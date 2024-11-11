@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Project</title>
+</head>
+<body>
+
+    <div class="container">
+    <form id="projetForm">
+        <label for="intitule">Intitulé du projet</label>
+        <input type="text" id="intitule" placeholder="Intitulé du projet" required>
+        <label for="lienGitHub">Lien GitHub</label>
+        <input type="url" id="lienGitHub" placeholder="Lien GitHub" required>
+        <label for="competences">Compétences</label>
+        <input type="text" id="competences" placeholder="Compétences" required>
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" placeholder="Date" required>
+        <button type="button" onclick="ajouterProjet()">Valider</button>
+        <button type="button" onclick="terminer()">Terminer</button>
+    </form>
+</div>
+    <div id="projetsList"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        #portfolio {
+            max-width: 800px;
+            width: 90%;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        #portfolio h1 {
+            font-size: 2em;
+            color: #444;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        #portfolio p {
+            font-size: 1em;
+            color: #666;
+            margin: 5px 0;
+        }
+        
+        #portfolio h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #portfolio div {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        #portfolio h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 0;
+        }
+        
+        #portfolio a {
+            color: #007acc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        #portfolio a:hover {
+            text-decoration: underline;
+        }
+        
+        #portfolio p {
+            font-size: 1em;
+            color: #666;
+        }
+        
+        button {
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: #555;
+        }
+        
+        @media (max-width: 600px) {
+            #portfolio, button {
+                width: 95%;
+                padding: 15px;
+            }
+            #portfolio h1, #portfolio h2 {
+                font-size: 1.5em;
+            }
+        }
+        </style>
+</head>
+<body>
+<div id="portfolio">
+</div>
+<button onclick="genererPDF()">Télécharger PDF</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
+    function afficherPortfolio() {
+        let apprenant = JSON.parse(localStorage.getItem('apprenant'));
+        let portfolio = document.getElementById('portfolio');
+        
+        portfolio.innerHTML = `
+            <h1>${apprenant.nom} ${apprenant.prenom}</h1>
+            <p>Email: ${apprenant.email}</p>
+            <p>Téléphone: ${apprenant.telephone}</p>
+            <p>Groupe: ${apprenant.groupe}</p>
+            <h2>Projets:</h2>
+        `;
+
+        apprenant.projets.forEach(projet => {
+            let projetDiv = document.createElement('div');
+            projetDiv.innerHTML = `
+                <h3>${projet.intitule}</h3>
+                <a href="${projet.lienGitHub}" target="_blank">Lien GitHub</a>
+                <p>Compétences: ${projet.competences.join(', ')}</p>
+            `;
+            portfolio.appendChild(projetDiv);
+        });
+    }
+
+    function genererPDF() {
+        let portfolio = document.getElementById('portfolio');
+        html2pdf().from(portfolio).save('portfolio.pdf');
+    }
+
+    afficherPortfolio(); 
+    
+</script>
+</body>
+</html>
